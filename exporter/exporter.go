@@ -28,6 +28,7 @@ type Config struct {
 	FetchVersion   bool
 	FetchChannels  bool
 	FetchSchedules bool
+	FetchStorages  bool
 }
 
 type Exporter struct {
@@ -37,6 +38,7 @@ type Exporter struct {
 	version   *versionExporter
 	channels  *channelsExporter
 	schedules *schedulesExporter
+	storages  *storagesExporter
 }
 
 // Verify if Exporter implements prometheus.Collector
@@ -58,12 +60,18 @@ func New(ctx context.Context, client *epgstation.Client, config Config, logger l
 		schedulesExporter = newSchedulesExporter(ctx, client, logger)
 	}
 
+	var storagesExporter *storagesExporter
+	if config.FetchStorages {
+		storagesExporter = newStoragesExporter(ctx, client, logger)
+	}
+
 	return &Exporter{
 		ctx:       ctx,
 		logger:    logger,
 		version:   versionExporter,
 		channels:  channelsExporter,
 		schedules: schedulesExporter,
+		storages:  storagesExporter,
 	}
 }
 
@@ -77,6 +85,9 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	if e.schedules != nil {
 		e.schedules.Describe(ch)
 	}
+	if e.storages != nil {
+		e.storages.Describe(ch)
+	}
 }
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
@@ -88,5 +99,8 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	}
 	if e.schedules != nil {
 		e.schedules.Collect(ch)
+	}
+	if e.storages != nil {
+		e.storages.Collect(ch)
 	}
 }

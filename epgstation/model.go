@@ -63,3 +63,14 @@ type ChannelItem struct {
 	ChannelType        string `json:"channelType"`
 	Channel            string `json:"channel"`
 }
+
+type StorageItem struct {
+	Name      string `json:"name"`
+	Available int64  `json:"available"`
+	Used      int64  `json:"used"`
+	Total     int64  `json:"total"`
+}
+
+type StorageInfo struct {
+	Items []StorageItem `json:"items"`
+}

@@ -49,6 +49,8 @@ var (
 		"Whether to export metrics from /api/channels.").Default("true").Bool()
 	fetchSchedules = kingpin.Flag("exporter.schedules",
 		"Whether to export metrics from /api/schedules.").Default("true").Bool()
+	fetchStorages = kingpin.Flag("exporter.storages",
+		"Whether to export metrics from /api/storages.").Default("true").Bool()
 )
 
 func main() {
@@ -71,6 +73,7 @@ func main() {
 		FetchVersion:   *fetchVersion,
 		FetchChannels:  *fetchChannels,
 		FetchSchedules: *fetchSchedules,
+		FetchStorages:  *fetchStorages,
 	}
 	var handler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
 		registry := prometheus.NewRegistry()
