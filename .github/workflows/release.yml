@@ -1,0 +1,38 @@
+on:
+  push:
+    tags: ['*']
+
+name: release
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        os: [linux]
+        arch:
+          - amd64
+          - arm
+          - arm64
+    env:
+      GOOS: '${{ matrix.os }}'
+      GOARCH: '${{ matrix.arch }}'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: 'go.mod'
+      - run: make build RELEASE=1
+      - run: |
+          name=epgstation_exporter-v$(cat VERSION).$GOOS-$GOARCH
+          mkdir "$name"
+          mv README.md "${name}/"
+          mv LICENSE "${name}/"
+          mv epgstation_exporter "${name}/"
+          tar cf "$name.tar.gz" "$name"
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: epgstation_exporter-*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
