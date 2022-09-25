@@ -74,3 +74,23 @@ type StorageItem struct {
 type StorageInfo struct {
 	Items []StorageItem `json:"items"`
 }
+
+type StreamInfoItem struct {
+	StreamID    int                `json:"streamId"`
+	Type        string             `json:"type"`
+	Mode        int                `json:"mode"`
+	IsEnable    bool               `json:"isEnable"`
+	ChannelID   int64              `json:"channelId"`
+	Name        string             `json:"name"`
+	StartAt     int64              `json:"startAt"`
+	EndAt       int64              `json:"endAt"`
+	Description *string            `json:"description"`
+	Extended    *string            `json:"extended"`
+	RawExtended *map[string]string `json:"rawExtended"`
+	VideoFileID *int               `json:"videoFileId"`
+	RecordedID  *int               `json:"recordedId"`
+}
+
+type StreamInfo struct {
+	Items []StreamInfoItem `json:"items"`
+}
