@@ -60,6 +60,9 @@ jobs:
           mv LICENSE "${name}/"
           mv epgstation_exporter "${name}/"
           tar cf "$name.tar.gz" "$name"
+        env:
+          GOOS: '${{ matrix.os }}'
+          GOARCH: '${{ matrix.arch }}'
       - uses: softprops/action-gh-release@v1
         with:
           files: epgstation_exporter-*.tar.gz
