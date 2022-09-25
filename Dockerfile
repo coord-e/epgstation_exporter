@@ -8,4 +8,5 @@ ARG TARGETARCH
 COPY $BIN_DIR/$TARGETARCH/epgstation_exporter /usr/bin/epgstation_exporter
 
 EXPOSE 9112
-CMD ["/usr/bin/epgstation_exporter"]
+USER nobody
+ENTRYPOINT ["/usr/bin/epgstation_exporter"]
