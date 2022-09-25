@@ -39,7 +39,7 @@ var (
 
 var (
 	webConfig     = webflag.AddFlags(kingpin.CommandLine)
-	listenAddress = kingpin.Flag("web.listen-address", "The address to listen on for HTTP requests.").Default(":9110").String()
+	listenAddress = kingpin.Flag("web.listen-address", "The address to listen on for HTTP requests.").Default(":9112").String()
 	metricPath    = kingpin.Flag("web.telemetry-path",
 		"Path under which to expose metrics.").Default("/metrics").String()
 	epgstationPath = kingpin.Flag("exporter.epgstation-path",

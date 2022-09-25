@@ -16,7 +16,7 @@ Flags:
   -h, --help                Show context-sensitive help (also try --help-long and --help-man).
       --web.config.file=""  [EXPERIMENTAL] Path to configuration file that can enable TLS or
                             authentication.
-      --web.listen-address=":9110"
+      --web.listen-address=":9112"
                             The address to listen on for HTTP requests.
       --web.telemetry-path="/metrics"
                             Path under which to expose metrics.
