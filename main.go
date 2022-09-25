@@ -42,8 +42,8 @@ var (
 	listenAddress = kingpin.Flag("web.listen-address", "The address to listen on for HTTP requests.").Default(":9112").String()
 	metricPath    = kingpin.Flag("web.telemetry-path",
 		"Path under which to expose metrics.").Default("/metrics").String()
-	epgstationPath = kingpin.Flag("exporter.epgstation-path",
-		"Path to the EPGStation instance.").Required().String()
+	epgstationURL = kingpin.Flag("exporter.epgstation-url",
+		"URL of the EPGStation instance.").Required().String()
 	fetchVersion = kingpin.Flag("exporter.version",
 		"Whether to export metrics from /api/version.").Default("true").Bool()
 	fetchChannels = kingpin.Flag("exporter.channels",
@@ -66,7 +66,7 @@ func main() {
 
 	level.Info(logger).Log("msg", "Starting epgstation_exporter", "version", BuildVersion, "commit", BuildCommitSha)
 
-	client, err := epgstation.NewClient(*epgstationPath)
+	client, err := epgstation.NewClient(*epgstationURL)
 	if err != nil {
 		level.Error(logger).Log("msg", "failed to create EPGStation client", "err", err)
 		os.Exit(1)
