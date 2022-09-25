@@ -54,7 +54,7 @@ jobs:
         with:
           name: epgstation_exporter-${{ matrix.os }}-${{ matrix.arch }}
       - run: |
-          name=epgstation_exporter-v$(cat VERSION).$GOOS-$GOARCH
+          name=epgstation_exporter-$(cat VERSION).$GOOS-$GOARCH
           mkdir "$name"
           mv README.md "${name}/"
           mv LICENSE "${name}/"
@@ -100,7 +100,7 @@ jobs:
         id: select-tags
         run: |
           if [ "$GITHUB_REF_TYPE" == tag ]; then
-            echo "::set-output name=tags::$IMAGE_REPOSITORY:latest,$IMAGE_REPOSITORY:$GITHUB_REF_NAME"
+            echo "::set-output name=tags::$IMAGE_REPOSITORY:latest,$IMAGE_REPOSITORY:$(cat VERSION)"
           else
             echo "::set-output name=tags::$IMAGE_REPOSITORY:$GITHUB_SHA,$IMAGE_REPOSITORY:$GITHUB_REF_NAME"
           fi
