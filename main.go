@@ -49,7 +49,7 @@ var (
 	fetchChannels = kingpin.Flag("exporter.channels",
 		"Whether to export metrics from /api/channels.").Default("true").Bool()
 	fetchSchedules = kingpin.Flag("exporter.schedules",
-		"Whether to export metrics from /api/schedules.").Default("false").Bool()
+		"Whether to export metrics from /api/schedules.").Default("true").Bool()
 	fetchStorages = kingpin.Flag("exporter.storages",
 		"Whether to export metrics from /api/storages.").Default("true").Bool()
 	fetchStreams = kingpin.Flag("exporter.streams",
