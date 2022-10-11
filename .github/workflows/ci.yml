@@ -113,6 +113,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.select-tags.outputs.tags }}
-          build-args: |
-            BIN_DIR
-            BASE_IMAGE=gcr.io/distroless/static-debian11:latest
+          build-args: BIN_DIR
