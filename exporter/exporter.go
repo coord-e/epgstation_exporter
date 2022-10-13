@@ -30,6 +30,7 @@ type Config struct {
 	FetchSchedules bool
 	FetchStorages  bool
 	FetchStreams   bool
+	FetchEncode    bool
 }
 
 type Exporter struct {
@@ -41,6 +42,7 @@ type Exporter struct {
 	schedules *schedulesExporter
 	storages  *storagesExporter
 	streams   *streamsExporter
+	encode    *encodeExporter
 }
 
 // Verify if Exporter implements prometheus.Collector
@@ -72,6 +74,11 @@ func New(ctx context.Context, client *epgstation.Client, config Config, logger l
 		streamsExporter = newStreamsExporter(ctx, client, logger)
 	}
 
+	var encodeExporter *encodeExporter
+	if config.FetchEncode {
+		encodeExporter = newEncodeExporter(ctx, client, logger)
+	}
+
 	return &Exporter{
 		ctx:       ctx,
 		logger:    logger,
@@ -80,6 +87,7 @@ func New(ctx context.Context, client *epgstation.Client, config Config, logger l
 		schedules: schedulesExporter,
 		storages:  storagesExporter,
 		streams:   streamsExporter,
+		encode:    encodeExporter,
 	}
 }
 
@@ -99,6 +107,9 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	if e.streams != nil {
 		e.streams.Describe(ch)
 	}
+	if e.encode != nil {
+		e.encode.Describe(ch)
+	}
 }
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
@@ -116,5 +127,8 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	}
 	if e.streams != nil {
 		e.streams.Collect(ch)
+	}
+	if e.encode != nil {
+		e.encode.Collect(ch)
 	}
 }
