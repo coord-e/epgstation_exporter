@@ -13,22 +13,24 @@ $ epgstation_exporter -h
 usage: epgstation_exporter --exporter.epgstation-url=EXPORTER.EPGSTATION-URL [<flags>]
 
 Flags:
-  -h, --help                Show context-sensitive help (also try --help-long and --help-man).
-      --web.config.file=""  [EXPERIMENTAL] Path to configuration file that can enable TLS or authentication.
+  -h, --help                    Show context-sensitive help (also try --help-long and --help-man).
+      --web.config.file=""      [EXPERIMENTAL] Path to configuration file that can enable TLS or authentication.
       --web.listen-address=":9112"
-                            The address to listen on for HTTP requests.
+                                The address to listen on for HTTP requests.
       --web.telemetry-path="/metrics"
-                            Path under which to expose metrics.
+                                Path under which to expose metrics.
       --exporter.epgstation-url=EXPORTER.EPGSTATION-URL
-                            URL of the EPGStation instance.
-      --exporter.version    Whether to export metrics from /api/version.
-      --exporter.channels   Whether to export metrics from /api/channels.
-      --exporter.schedules  Whether to export metrics from /api/schedules.
-      --exporter.storages   Whether to export metrics from /api/storages.
-      --exporter.streams    Whether to export metrics from /api/streams.
-      --log.level=info      Only log messages with the given severity or above. One of: [debug, info, warn, error]
-      --log.format=logfmt   Output format of log messages. One of: [logfmt, json]
-      --version             Show application version.
+                                URL of the EPGStation instance.
+      --exporter.version        Whether to export metrics from /api/version.
+      --exporter.channels       Whether to export metrics from /api/channels.
+      --exporter.schedules      Whether to export metrics from /api/schedules.
+      --exporter.storages       Whether to export metrics from /api/storages.
+      --exporter.streams        Whether to export metrics from /api/streams.
+      --exporter.encode         Whether to export metrics from /api/encode.
+      --exporter.reserves-cnts  Whether to export metrics from /api/reserves/cnts.
+      --log.level=info          Only log messages with the given severity or above. One of: [debug, info, warn, error]
+      --log.format=logfmt       Output format of log messages. One of: [logfmt, json]
+      --version                 Show application version.
 ```
 
 ### Example

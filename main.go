@@ -56,6 +56,8 @@ var (
 		"Whether to export metrics from /api/streams.").Default("true").Bool()
 	fetchEncode = kingpin.Flag("exporter.encode",
 		"Whether to export metrics from /api/encode.").Default("true").Bool()
+	fetchReservesCnts = kingpin.Flag("exporter.reserves-cnts",
+		"Whether to export metrics from /api/reserves/cnts.").Default("true").Bool()
 )
 
 func main() {
@@ -75,12 +77,13 @@ func main() {
 	}
 
 	config := exporter.Config{
-		FetchVersion:   *fetchVersion,
-		FetchChannels:  *fetchChannels,
-		FetchSchedules: *fetchSchedules,
-		FetchStorages:  *fetchStorages,
-		FetchStreams:   *fetchStreams,
-		FetchEncode:    *fetchEncode,
+		FetchVersion:      *fetchVersion,
+		FetchChannels:     *fetchChannels,
+		FetchSchedules:    *fetchSchedules,
+		FetchStorages:     *fetchStorages,
+		FetchStreams:      *fetchStreams,
+		FetchEncode:       *fetchEncode,
+		FetchReservesCnts: *fetchReservesCnts,
 	}
 	var handler http.HandlerFunc = func(w http.ResponseWriter, r *http.Request) {
 		registry := prometheus.NewRegistry()

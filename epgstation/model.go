@@ -165,3 +165,10 @@ type EncodeInfo struct {
 	RunningItems []EncodeProgramItem `json:"runningItems"`
 	WaitItems    []EncodeProgramItem `json:"waitItems"`
 }
+
+type ReserveCnts struct {
+	Normal    int64 `json:"normal"`
+	Conflicts int64 `json:"conflicts"`
+	Skips     int64 `json:"skips"`
+	Overlaps  int64 `json:"overlaps"`
+}

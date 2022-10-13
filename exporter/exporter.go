@@ -25,24 +25,26 @@ import (
 const namespace = "epgstation"
 
 type Config struct {
-	FetchVersion   bool
-	FetchChannels  bool
-	FetchSchedules bool
-	FetchStorages  bool
-	FetchStreams   bool
-	FetchEncode    bool
+	FetchVersion      bool
+	FetchChannels     bool
+	FetchSchedules    bool
+	FetchStorages     bool
+	FetchStreams      bool
+	FetchEncode       bool
+	FetchReservesCnts bool
 }
 
 type Exporter struct {
 	ctx    context.Context
 	logger log.Logger
 
-	version   *versionExporter
-	channels  *channelsExporter
-	schedules *schedulesExporter
-	storages  *storagesExporter
-	streams   *streamsExporter
-	encode    *encodeExporter
+	version      *versionExporter
+	channels     *channelsExporter
+	schedules    *schedulesExporter
+	storages     *storagesExporter
+	streams      *streamsExporter
+	encode       *encodeExporter
+	reservesCnts *reservesCntsExporter
 }
 
 // Verify if Exporter implements prometheus.Collector
@@ -79,15 +81,21 @@ func New(ctx context.Context, client *epgstation.Client, config Config, logger l
 		encodeExporter = newEncodeExporter(ctx, client, logger)
 	}
 
+	var reservesCntsExporter *reservesCntsExporter
+	if config.FetchReservesCnts {
+		reservesCntsExporter = newReservesCntsExporter(ctx, client, logger)
+	}
+
 	return &Exporter{
-		ctx:       ctx,
-		logger:    logger,
-		version:   versionExporter,
-		channels:  channelsExporter,
-		schedules: schedulesExporter,
-		storages:  storagesExporter,
-		streams:   streamsExporter,
-		encode:    encodeExporter,
+		ctx:          ctx,
+		logger:       logger,
+		version:      versionExporter,
+		channels:     channelsExporter,
+		schedules:    schedulesExporter,
+		storages:     storagesExporter,
+		streams:      streamsExporter,
+		encode:       encodeExporter,
+		reservesCnts: reservesCntsExporter,
 	}
 }
 
@@ -110,6 +118,9 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	if e.encode != nil {
 		e.encode.Describe(ch)
 	}
+	if e.reservesCnts != nil {
+		e.reservesCnts.Describe(ch)
+	}
 }
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
@@ -130,5 +141,8 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	}
 	if e.encode != nil {
 		e.encode.Collect(ch)
+	}
+	if e.reservesCnts != nil {
+		e.reservesCnts.Collect(ch)
 	}
 }
