@@ -93,7 +93,6 @@ func main() {
 	}
 	http.Handle(*metricPath, promhttp.InstrumentMetricHandler(prometheus.DefaultRegisterer, handler))
 
-	level.Info(logger).Log("msg", "Listening on", "addresses", webConfig.WebListenAddresses)
 	server := &http.Server{
 		ReadHeaderTimeout: 5 * time.Second,
 	}
