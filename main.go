@@ -38,9 +38,8 @@ var (
 )
 
 var (
-	webConfig     = webflag.AddFlags(kingpin.CommandLine)
-	listenAddress = kingpin.Flag("web.listen-address", "The address to listen on for HTTP requests.").Default(":9112").String()
-	metricPath    = kingpin.Flag("web.telemetry-path",
+	webConfig  = webflag.AddFlags(kingpin.CommandLine, ":9112")
+	metricPath = kingpin.Flag("web.telemetry-path",
 		"Path under which to expose metrics.").Default("/metrics").String()
 	epgstationURL = kingpin.Flag("exporter.epgstation-url",
 		"URL of the EPGStation instance.").Required().String()
@@ -94,12 +93,11 @@ func main() {
 	}
 	http.Handle(*metricPath, promhttp.InstrumentMetricHandler(prometheus.DefaultRegisterer, handler))
 
-	level.Info(logger).Log("msg", "Listening on", "address", *listenAddress)
+	level.Info(logger).Log("msg", "Listening on", "addresses", webConfig.WebListenAddresses)
 	server := &http.Server{
 		ReadHeaderTimeout: 5 * time.Second,
-		Addr:              *listenAddress,
 	}
-	if err := web.ListenAndServe(server, *webConfig, logger); err != nil {
+	if err := web.ListenAndServe(server, webConfig, logger); err != nil {
 		level.Error(logger).Log("err", err)
 		os.Exit(1)
 	}
