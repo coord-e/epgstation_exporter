@@ -14,9 +14,13 @@ usage: epgstation_exporter --exporter.epgstation-url=EXPORTER.EPGSTATION-URL [<f
 
 Flags:
   -h, --help                    Show context-sensitive help (also try --help-long and --help-man).
-      --web.config.file=""      [EXPERIMENTAL] Path to configuration file that can enable TLS or authentication.
-      --web.listen-address=":9112"
-                                The address to listen on for HTTP requests.
+      --web.systemd-socket      Use systemd socket activation listeners instead of port listeners
+                                (Linux only).
+      --web.listen-address=:9112 ...
+                                Addresses on which to expose metrics and web interface. Repeatable
+                                for multiple addresses.
+      --web.config.file=""      [EXPERIMENTAL] Path to configuration file that can enable TLS or
+                                authentication.
       --web.telemetry-path="/metrics"
                                 Path under which to expose metrics.
       --exporter.epgstation-url=EXPORTER.EPGSTATION-URL
