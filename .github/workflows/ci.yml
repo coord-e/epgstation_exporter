@@ -107,7 +107,7 @@ jobs:
           else
             echo "::set-output name=tags::$IMAGE_REPOSITORY:$GITHUB_SHA,$IMAGE_REPOSITORY:$GITHUB_REF_NAME"
           fi
-      - uses: docker/build-push-action@v3
+      - uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64,linux/arm64
