@@ -8,7 +8,7 @@ Container images are available at [the packages](https://github.com/coord-e?tab=
 
 ## Usage
 
-```
+```console
 $ epgstation_exporter -h
 usage: epgstation_exporter --exporter.epgstation-url=EXPORTER.EPGSTATION-URL [<flags>]
 
@@ -41,12 +41,12 @@ Flags:
 
 To run against a EPGStation instance running at `localhost:8888`:
 
-```shell
+```console
 $ epgstation_exporter --exporter.epgstation-url=http://localhost:8888/
 ```
 
 ## Build
 
-```shell
+```console
 $ make build
 ```
